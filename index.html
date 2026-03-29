@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Art Box 🎨</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background: #f0f2f6; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; max-width: 500px; width: 100%; }
+        input { width: 80%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 10px; }
+        button { background: #ff4b4b; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #ff3333; }
+        #output { margin-top: 20px; }
+        img { max-width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .loading { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>My Magic Art Box 🎨</h1>
+        <p>Type an idea and click magic!</p>
+        
+        <input type="text" id="prompt" placeholder="A cosmic cat in space...">
+        <br>
+        <button onclick="makeMagic()">Make Magic! ✨</button>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function makeMagic() {
+            const prompt = document.getElementById('prompt').value;
+            const output = document.getElementById('output');
+
+            if (!prompt) {
+                alert("Please type something first!");
+                return;
+            }
+
+            // Show loading message
+            output.innerHTML = `<p class="loading">The artist is drawing: <b>${prompt}</b>...</p>`;
+
+            // Create a random number so we always get a new image
+            const seed = Math.floor(Math.random() * 100000);
+            const imageUrl = `https://pollinations.ai/p/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${seed}`;
+
+            // Create the image element
+            const img = new Image();
+            img.src = imageUrl;
+            img.onload = function() {
+                output.innerHTML = `<h3>Ta-da! ✨</h3><img src="${imageUrl}" alt="AI Art">`;
+            };
+        }
+    </script>
+</body>
+</html>
